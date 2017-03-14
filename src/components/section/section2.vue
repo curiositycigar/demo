@@ -22,6 +22,7 @@
       return {
         active: 1,
         step: [
+          {complete: true},
           {complete: false},
           {complete: false},
           {complete: false}
@@ -30,12 +31,15 @@
     },
     methods: {
       next() {
-        if (this.step[this.active - 1].complete && this.active <= this.step.length) {
+        if (this.step[this.active].complete && this.active <= this.step.length) {
           this.active++;
         }
       },
       setComplete(i) {
-        this.step[i - 1].complete = true;
+        if (this.step[i - 1].complete === true) {
+          this.step[i].complete = true;
+        }
+        console.log(i, '::', this.step[i].complete);
       }
     }
   };
