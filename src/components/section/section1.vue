@@ -33,7 +33,7 @@
       <div class="operate-form">
         <el-menu class="el-menu" mode="horizontal" @select="handleSelect">
           <el-menu-item index="3">新扫描</el-menu-item>
-          <el-menu-item index="4"><a href="javascript:;" >新增</a></el-menu-item>
+          <el-menu-item index="4"><a href="javascript:;">新增</a></el-menu-item>
           <el-submenu index="5">
             <template slot="title">批量操作</template>
             <el-menu-item index="4-1">选项1</el-menu-item>
@@ -51,7 +51,7 @@
           <el-table-column prop="model" label="型号"></el-table-column>
           <el-table-column prop="watch" label="监控">
             <template scope="scope">
-              <el-switch v-model="scope.row.watch" width="50" on-text="on" off-text="off"></el-switch>
+              <el-switch v-model="scope.row.watch" on-text="on" off-text="off"></el-switch>
             </template>
           </el-table-column>
           <el-table-column prop="proof" label="凭证"></el-table-column>
@@ -74,7 +74,7 @@
           </el-table-column>
           <el-table-column prop="level" label="管理级别"></el-table-column>
           <el-table-column prop="businessname" label="业务名称"></el-table-column>
-          <el-table-column prop="operation" label="操作"  width="200"></el-table-column>
+          <el-table-column prop="operation" label="操作" width="200"></el-table-column>
         </el-table>
       </div>
     </div>
@@ -104,6 +104,9 @@
       },
       handleClose(key, keyPath) {
         console.log(key, keyPath);
+      },
+      handleSelect(key, path) {
+        console.log(key, path);
       },
       handleSubSelect(key, keyPath) {
         console.log(key, keyPath);
@@ -177,7 +180,7 @@
         .el-menu
           height: 100%
           background: #ffffff
-          .el-menu-item,.el-submenu__title
+          .el-menu-item, .el-submenu__title
             height: 50px
             line-height: 50px
       .table

@@ -5,7 +5,7 @@
         <img :src="logo" alt="logo">
       </el-col>
       <el-col :span="17">
-        <el-row :gutter="30" class="nav">
+        <el-row :gutter="14" class="nav">
           <el-col :span="2">
             <router-link to="/1">
               <span class="base-nav-icon manage-views"></span>
@@ -68,7 +68,7 @@
       .logo
         padding: 20px 0 0 20px
         img
-          width: 300px
+          width: 91%
       a
         display: block
         height: 75px
