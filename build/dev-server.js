@@ -23,14 +23,22 @@ var proxyTable = config.dev.proxyTable
 var app = express()
 
 
-var appData = require('../data.json');
-var list = appData.list;
+var appData = require('../mockData.json');
+var list = appData.devices;
+var communities = appData.communities;
+var netWork = appData.netWork;
 
 var apiRoutes = express.Router();
 
-apiRoutes.get('/list', function (req, res) {
+apiRoutes.get('/devices', function (req, res) {
   let type = req.query.type;
+  let size = req.query.size;
+  let current = req.query.current;
+  let total;
+  let begin = ((current-1)*size);
+  let end = (current*size); // <end
   let data = [];
+  let pageDate = [];
   if(type == 0){
     data = list;
   }else{
@@ -39,10 +47,32 @@ apiRoutes.get('/list', function (req, res) {
         data.push(item);
     });
   }
+  total = data.length;
+  end > total ? end = total : end;
+  while(begin < end){
+    pageDate.push(data[begin]);
+    begin++;
+  }
 
   res.json({
     errno: 0,
-    data: data
+    data: pageDate,
+    type: type,
+    size: size,
+    current: current,
+    total: total
+  });
+});
+apiRoutes.get('/communities', function (req, res) {
+  res.json({
+    errno: 0,
+    data: communities
+  });
+});
+apiRoutes.get('/netWork', function (req, res) {
+  res.json({
+    errno: 0,
+    data: netWork
   });
 });
 

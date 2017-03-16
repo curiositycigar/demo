@@ -7,10 +7,10 @@
           <el-tabs type="border-card">
             <el-tab-pane label="IT资产">
               <div class="lv-group">
-                <el-menu-item index="1-1" @click="getDataByType('0')" class="lv1">网络设备</el-menu-item>
-                <el-menu-item index="1-2" @click="getDataByType('1')" class="lv2">路由器</el-menu-item>
-                <el-menu-item index="1-3" @click="getDataByType('2')" class="lv2">交换机</el-menu-item>
-                <el-menu-item index="1-4" @click="getDataByType('3')" class="lv2">其他</el-menu-item>
+                <el-menu-item index="1-1" @click="changeType(0)" class="lv1">网络设备</el-menu-item>
+                <el-menu-item index="1-2" @click="changeType(1)" class="lv2">路由器</el-menu-item>
+                <el-menu-item index="1-3" @click="changeType(2)" class="lv2">交换机</el-menu-item>
+                <el-menu-item index="1-4" @click="changeType(3)" class="lv2">其他</el-menu-item>
               </div>
             </el-tab-pane>
             <el-tab-pane label="位置">
@@ -77,6 +77,15 @@
           <el-table-column prop="operation" label="操作" width="200"></el-table-column>
         </el-table>
       </div>
+      <el-pagination
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="page.current"
+        :page-sizes="page.sizes"
+        :page-size="page.size"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="page.total">
+      </el-pagination>
     </div>
   </div>
 </template>
@@ -86,17 +95,22 @@
   export default {
     data() {
       return {
-        data: []
+        data: [],
+        page: {
+          type: 0,
+          sizes: [10, 20, 25, 30],
+          size: 20,
+          total: 100,
+          current: 1,
+          changing: null
+        }
       };
     },
     created() {
-      this.$http.get('/api/list?type=0').then((res) => {
-        res = res.body;
-        if (res.errno === OK) {
-          this.data = res.data;
-          console.log(res.data);
-        }
-      });
+      let vm = this;
+      let page = this.page;
+      console.log('type=' + page.type + '&size=' + page.size + '&current=' + page.current);
+      vm.getData();
     },
     methods: {
       handleOpen(key, keyPath) {
@@ -111,17 +125,59 @@
       handleSubSelect(key, keyPath) {
         console.log(key, keyPath);
       },
-      getDataByType(type) {
-        let url = '/api/list?type=' + type;
+      handleSelectionChange() {
+        console.log(' ');
+      },
+      changeType(type) {
+        let vm = this;
+        let page = this.page;
+        page.type = type;
+        vm.getData();
+      },
+      handleSizeChange(val) {
+        let vm = this;
+        let page = this.page;
+        page.size = val;
+        console.log('每 页' + val + '条', this.page);
+        clearTimeout(page.changing);
+        page.changing = setTimeout(function () {
+          vm.getData();
+        }, 100);
+      },
+      handleCurrentChange(val) {
+        let vm = this;
+        let page = this.page;
+        page.current = val;
+        console.log('当前页: ' + val, this.page);
+        clearTimeout(page.changing);
+        page.changing = setTimeout(function () {
+          vm.getData();
+        }, 100);
+      },
+      getData(callback, completeCb) {
+        let page = this.page;
+        let url = '/api/devices?' + 'type=' + page.type + '&size=' + page.size + '&current=' + page.current;
         this.$http.get(url).then((res) => {
           res = res.body;
           if (res.errno === OK) {
+            if (callback) {
+              // 数据加载前执行
+              callback(res);
+            }
             this.data = res.data;
+            this.setPage(this.page, res);
+            if (completeCb) {
+              // 数据加载前执行
+              completeCb(res);
+            }
           }
         });
       },
-      handleSelectionChange() {
-        console.log('');
+      setPage(page, data) {
+        page.type = Number.parseInt(data.type);
+        page.size = Number.parseInt(data.size);
+        page.current = Number.parseInt(data.current);
+        page.total = Number.parseInt(data.total);
       }
     }
   };
@@ -129,9 +185,8 @@
 
 <style lang="stylus" rel="stylesheet/stylus">
   .section
-    height: 100%
     width: 100%
-    position: relative
+    height: 100%
     .left-nav
       float: left
       width: 231px

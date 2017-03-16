@@ -3,8 +3,9 @@
 module.exports = {
   root: true,
   parser: 'babel-eslint',
-  parserOptions: {
-    sourceType: 'module'
+  "parserOptions": {
+    "ecmaVersion": 7,  // 可选 3 5（默认） 6 7
+    "sourceType": "module", // 可选script（默认） module
   },
   env: {
     browser: true,
@@ -17,6 +18,7 @@ module.exports = {
   ],
   // add your custom rules here
   'rules': {
+    "strict": 0,
     // allow paren-less arrow functions
     'arrow-parens': 0,
     // allow async-await

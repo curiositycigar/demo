@@ -20,6 +20,13 @@ Vue.use(VueRouter);
 let router = new VueRouter({
   routes: [
     {
+      path: '/',
+      beforeEnter (to, from, next) {
+        return next(to.path + '2');
+      },
+      component: body1
+    },
+    {
       path: '/1',
       component: body1,
       children: [
@@ -199,9 +206,8 @@ let router = new VueRouter({
       ]
     }
   ],
-  linkActiveClass: 'active'
+  linkActiveClass: 'active',
+  hashBang: true
 });
-
-router.push('/2/1');
 
 export default router;

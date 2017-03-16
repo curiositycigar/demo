@@ -1,5 +1,5 @@
 {
-  "list": [
+  "devices": [
     {
       "state": 1,
       "type": 1,
@@ -79,6 +79,86 @@
       "level": 1,
       "businessname": "boss",
       "operation": true
+    }
+  ],
+  "communities": [
+    {
+      "version": "v2",
+      "sign": "public",
+      "edit": "删除"
+    },
+    {
+      "version": "v2",
+      "sign": "public",
+      "edit": "删除"
+    },
+    {
+      "version": "v2",
+      "sign": "public",
+      "edit": "删除"
+    },
+    {
+      "version": "v2",
+      "sign": "public",
+      "edit": "删除"
+    },
+    {
+      "version": "v2",
+      "sign": "public",
+      "edit": "删除"
+    },
+    {
+      "version": "v2",
+      "sign": "public",
+      "edit": "删除"
+    },
+    {
+      "version": "v2",
+      "sign": "public",
+      "edit": "删除"
+    },
+    {
+      "version": "v2",
+      "sign": "public",
+      "edit": "删除"
+    }
+  ],
+  "netWork": [
+    {
+      "address": "192.168.0.0",
+      "netMask": "255.255.255.0",
+      "maxNumber": 254,
+      "ipField": "192.168.0.1~192.168.0.254"
+    },
+    {
+      "address": "192.168.0.0",
+      "netMask": "255.255.255.0",
+      "maxNumber": 254,
+      "ipField": "192.168.0.1~192.168.0.254"
+    },
+    {
+      "address": "192.168.0.0",
+      "netMask": "255.255.255.0",
+      "maxNumber": 254,
+      "ipField": "192.168.0.1~192.168.0.254"
+    },
+    {
+      "address": "192.168.0.0",
+      "netMask": "255.255.255.0",
+      "maxNumber": 254,
+      "ipField": "192.168.0.1~192.168.0.254"
+    },
+    {
+      "address": "192.168.0.0",
+      "netMask": "255.255.255.0",
+      "maxNumber": 254,
+      "ipField": "192.168.0.1~192.168.0.254"
+    },
+    {
+      "address": "192.168.0.0",
+      "netMask": "255.255.255.0",
+      "maxNumber": 254,
+      "ipField": "192.168.0.1~192.168.0.254"
     }
   ]
 }
